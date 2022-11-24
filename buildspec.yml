@@ -7,7 +7,7 @@ phases:
       - IMAGE_TAG=$(echo $VERSION.$CODEBUILD_BUILD_NUMBER)
   build:
     commands:
-      - docker build -t django-app-avto3 .
+      - docker build -t django-app-avto3:latest .
       - echo rename image
       - docker tag django-app-avto3:latest 778404080221.dkr.ecr.us-east-1.amazonaws.com/django-app-avto3:latest
       - docker push 778404080221.dkr.ecr.us-east-1.amazonaws.com/django-app-avto3:latest

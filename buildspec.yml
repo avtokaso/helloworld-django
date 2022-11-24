@@ -1,0 +1,21 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 778404080221.dkr.ecr.us-east-1.amazonaws.com
+      - REPO_URI=$AWS_ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/django-app-avto3
+      - IMAGE_TAG=$(echo $VERSION.$CODEBUILD_BUILD_NUMBER)
+  build:
+    commands:
+      - docker build -t django-app-avto3 .
+      - echo rename image
+      - docker tag django-app-avto3:latest 778404080221.dkr.ecr.us-east-1.amazonaws.com/django-app-avto3:latest
+      - docker push 778404080221.dkr.ecr.us-east-1.amazonaws.com/django-app-avto3:latest
+      - printf '[{"name":"mydjangoappcontainer","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > avto-django-app2-imagedefinitions.json
+      - docker image ls
+  post_build:
+    commands:
+      - echo finish
+artifacts:
+  files:
+    - avto-django-app2-imagedefinitions.json

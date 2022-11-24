@@ -11,7 +11,7 @@ phases:
       - echo rename image
       - docker tag django-app-avto3:latest 778404080221.dkr.ecr.us-east-1.amazonaws.com/django-app-avto3:latest
       - docker push 778404080221.dkr.ecr.us-east-1.amazonaws.com/django-app-avto3:latest
-      - printf '[{"name":"mydjangoappcontainer","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > avto-django-app2-imagedefinitions.json
+      - printf '[{"name":"django-app-avto-container","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > avto-django-app2-imagedefinitions.json
       - docker image ls
   post_build:
     commands:
